@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player Design</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/7bf362d791.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="music-player">
+        <nav>
+          <div class="circle">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>
+          <div class="circle">
+            <i class="fa-solid fa-bars"></i>
+          </div>
+        </nav>
+        <img src="/media/Parampara-Thakur-561x608.webp" class="song-img" id="songImg"/>
+        <h1 id="songTitle">Despacito</h1>
+        <p id="songArtist">Luis Fonsi Ft. Puerto Rican</p>
+
+        <audio  id="song">
+          <source
+            src="/mmm1/pagalworld.com.mx-Ankhiyon Ke Jharokhon Se.mp3"
+            type="audio/mpeg"
+          />
+        </audio>
+        <input type="range" value="0" id="progress" />
+       
+
+
+        <div class="controls">
+            <div onclick="prevSong()"><i class="fa-solid fa-backward"></i></div>
+            <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
+            <div onclick="nextSong()"><i class="fa-solid fa-forward"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+let progress = document.getElementById("progress");
+let song = document.getElementById("song");
+let ctrlIcon = document.getElementById("ctrlIcon");
+let songTitle = document.getElementById("songTitle");
+let songArtist = document.getElementById("songArtist");
+let songImg = document.getElementById("songImg");
+
+//Array of songs
+
+const songs = [
+{
+  title: "Despacito",
+  artist: "Ankhiyon Ke Jharokhon ",
+  src: "/mmm1/pagalworld.com.mx-Ankhiyon Ke Jharokhon Se.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Bharti",
+  artist: " Jharokhon ",
+  src: "/mmm1/pagalworld.com.mx-Likhe Jo Khat Tujhe Woh Teri Yaad Mein.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Blinding Lights",
+  artist: "The Weeknd",
+  src: "/mmm1/pagalworld.com.mx-Uncha Lamba Kad – Welcome.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Blinding ",
+  artist: "Singh",
+  src: "/mmm1/Tum Kya Ho - Arijit Singh, Ankit Tiwari(MixJio.In).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Yaadon Ke Jharokhon Se - Sonu Nigam, Shreya Ghoshal, Mithoon(MixJio.In).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/3D_Audio__Jhalak_Dikhlaja__Himesh_Reshmiya_Aksar_Imran_hasmi(48k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/50_cent_Just_A_Lil_Bit_Instrumental.(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{       
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/52_GAJ_KA_DAMAN__PRANJAL_DAHIYA__AMAN_JAJI__RENUKA_PANWAR___MUKESH_JAJI__SAHIL_SANDHU(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/176._Mera_Geet_Amar_Kar_Do_-_Jagjit_Singh(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Aafreen_Tera_Chehra.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Ed_Sheeran_Piano_Cover_-_Perfect_(Relaxing_Piano)(128k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Aankh_Hai_Bhari_Bhari_Full_Video_Song__Tum_Se_Achcha_Kaun_Hai__Nakul_Kapoor,_Kim_Sharma(128k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Aap_Ki_Kashish.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Aashiq_Banaya_Aapne.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Abhi_Na_Jao_Chhod_Kar_l_अभी_न_जाओ_छोड़_कर(COLOR)_HD_-_Mohammed_Rafi,Asha_Bhosle__Dev_Anand_Sadhna.(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Afsana.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Aye_Khuda_Lyrics__Murder_2__Kshitij_Tarey,_Saim,_Mithoon__Emraan_Hashmi,_Jacqueline_Fernandez_(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Bahut_Pyar_Karte_Hai.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Balam_Kalo_-_Monika_Sharma_ft_Rahul_Chhaniwala__Ishika_Rajput__New_Haryanvi_Songs_Haryanavi_2021(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Banni_Rajasthani_Song__Kapil_Jangir__Komal_Kanwar_Amrawat__Ks_Records(128k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Bewafa_Tera_Masoom_Chehra.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Bheegi_Bheegi_Raaton_Mein.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Blackmail_-_Pal_Pal_Dil_Ke_Paas_Tum_Rehti_Ho_-_Kishore_Kumar(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Chhaiya_Chhaiya.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Chithi_Na_Koi_Sandesh_with_lyrics__चिठी_न_कोई_सनद्शे__Dushman__Jagjit_Singh__Anand_Bakshi(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Chokra_Jawaan_-_Full_Song__Ishaqzaade__Arjun_Kapoor__Parineeti_Chopra__Sunidhi__Vishal(128k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/COCO_COLA_(Full_Song)__Ruchika_Jangid,_Kay_D__New_Haryanvi_Songs_Haryanavi_2020__Nav_Haryanvi(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Coke_Studio_Season_8_Tajdar-e-Haram_Atif_Aslam(128k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Darasal_Lofi.mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Dilbar_8D_full_audio_song_A_R_Rahman’s_new_song_composed_in_8D_technology(256k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+{
+  title: "Yaadon ke Jharokhon",
+  artist: "Bharti",
+  src: "/mmm1/Ed_Sheeran_-_Perfect_[Official_Lyric_Video](128k).mp3",
+  img: "/media/Parampara-Thakur-561x608.webp",
+},
+
+];
+
+
+let currentSongIndex = 0;
+
+song.onloadedmetadata = function(){
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+}
+
+
+function playPause(){
+    if(ctrlIcon.classList.contains("fa-pause")){
+        song.pause();
+        ctrlIcon.classList.remove("fa-pause");
+        ctrlIcon.classList.add("fa-play");
+    }
+    else{
+        song.play();
+        ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
+    }
+}
+
+function updateSongDetails(){
+  const currentSong = songs[currentSongIndex];
+  song.src = currentSong.src;
+  songImg.src = currentSong.img;
+  songTitle.innerText = currentSong.title;
+  songArtist.innerText = currentSong.artist;
+  song.play();
+  ctrlIcon.classList.add("fa-pause");
+  ctrlIcon.classList.remove("fa-play")
+}
+
+function prevSong(){
+  currentSongIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex- 1;
+  updateSongDetails(); 
+}
+
+function nextSong (){
+  currentSongIndex = currentSongIndex === songs.length - 1 ? 0 : currentSongIndex + 1; 
+  updateSongDetails();
+}
+
+
+
+
+
+
+
+
+
+if(song.play()){
+    setInterval(()=>{
+        progress.value = song.currentTime;
+    },500);
+}
+
+progress.onchange = function(){
+    
+    song.currentTime = progress.value;
+    ctrlIcon.classList.add("fa-pause");
+        ctrlIcon.classList.remove("fa-play");
+}
+
+    </script>
+  </body>
+</html>
