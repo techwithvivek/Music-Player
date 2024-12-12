@@ -286,15 +286,6 @@ function nextSong (){
   currentSongIndex = currentSongIndex === songs.length - 1 ? 0 : currentSongIndex + 1; 
   updateSongDetails();
 }
-
-
-
-
-
-
-
-
-
 if(song.play()){
     setInterval(()=>{
         progress.value = song.currentTime;
