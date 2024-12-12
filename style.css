@@ -23,7 +23,11 @@
     text-align: center;
     border-radius: 50px;
 }
-
+.text{
+    background-color: rgb(116, 189, 20);
+    border-radius: 50%;
+    color: #f53192;
+}
 nav {
     display: flex;
     justify-content: space-between;

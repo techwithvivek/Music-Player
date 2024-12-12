@@ -13,6 +13,9 @@
   <body>
     <div class="container">
       <div class="music-player">
+        <div>
+          <h4 class="text">Developed By Vivek Bharti</h4>
+        </div>
         <nav>
           <div class="circle">
             <i class="fa-solid fa-angle-left"></i>
@@ -33,14 +36,13 @@
         </audio>
         <input type="range" value="0" id="progress" />
        
-
-
         <div class="controls">
             <div onclick="prevSong()"><i class="fa-solid fa-backward"></i></div>
             <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div>
             <div onclick="nextSong()"><i class="fa-solid fa-forward"></i></div>
         </div>
       </div>
+      
     </div>
 
     <script>
@@ -300,5 +302,6 @@ progress.onchange = function(){
 }
 
     </script>
+  
   </body>
 </html>
